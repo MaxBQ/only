@@ -1,26 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import { Routes, Route } from "react-router-dom";
+import "./index";
+import { Login } from "./pages/Login";
+import { Profile } from "./pages/Profile";
+import { Only } from "./components/Only";
+import { User } from "./api/fetchAPI";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+export const App = () => {
+	const [user, setUser] = useState({} as User);
 
-export default App;
+	return (
+		<>
+			<Only>ONLY.</Only>
+			<Routes>
+				<Route
+					path='/'
+					element={
+						<Login
+							onChange={(data) => {
+								setUser(data);
+							}}
+						/>
+					}
+				/>
+				<Route path='/profile' element={<Profile user={user} />} />
+			</Routes>
+		</>
+	);
+};
